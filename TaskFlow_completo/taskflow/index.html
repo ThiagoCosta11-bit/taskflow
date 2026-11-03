@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TaskFlow - gerenciador pessoal de tarefas">
+  <title>TaskFlow | Gerenciador de tarefas</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="TaskFlow início">
+        <span class="brand-mark">✓</span>
+        <span>Task<span class="brand-light">Flow</span></span>
+      </a>
+      <div class="sidebar-label">MENU PRINCIPAL</div>
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a class="nav-item active" href="#dashboard"><span>▦</span> Visão geral</a>
+        <a class="nav-item" href="#board"><span>▤</span> Minhas tarefas</a>
+        <a class="nav-item" href="#new-task"><span>＋</span> Nova tarefa</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card">
+          <div class="help-icon">✦</div>
+          <strong>Mantenha o foco!</strong>
+          <p>Pequenos passos todos os dias geram grandes resultados.</p>
+        </div>
+        <div class="profile">
+          <div class="avatar">TF</div>
+          <div><strong>Meu espaço</strong><small>Área pessoal</small></div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content" id="dashboard">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="today-label">SEU ESPAÇO DE ORGANIZAÇÃO</p>
+          <h1>Olá! Vamos organizar seu dia <span class="wave">✦</span></h1>
+          <p class="subtitle">Acompanhe suas atividades e avance no seu ritmo.</p>
+        </div>
+        <button class="primary-btn top-add" id="top-add-btn" type="button">＋ Nova tarefa</button>
+      </header>
+
+      <section class="stats-grid" aria-label="Indicadores de tarefas">
+        <article class="stat-card total-card">
+          <div class="stat-top"><span>Total de tarefas</span><span class="stat-icon">▤</span></div>
+          <strong class="stat-number" id="total-count">0</strong>
+          <small>Tarefas cadastradas</small>
+        </article>
+        <article class="stat-card pending-card">
+          <div class="stat-top"><span>A fazer</span><span class="stat-icon">◷</span></div>
+          <strong class="stat-number" id="pending-count">0</strong>
+          <small>Aguardando início</small>
+        </article>
+        <article class="stat-card progress-card">
+          <div class="stat-top"><span>Em andamento</span><span class="stat-icon">↗</span></div>
+          <strong class="stat-number" id="progress-count">0</strong>
+          <small>Em execução</small>
+        </article>
+        <article class="stat-card done-card">
+          <div class="stat-top"><span>Concluídas</span><span class="stat-icon">✓</span></div>
+          <strong class="stat-number" id="done-count">0</strong>
+          <small>Finalizadas</small>
+        </article>
+      </section>
+
+      <section class="task-entry" id="new-task">
+        <div class="section-heading">
+          <div><span class="section-kicker">ORGANIZE-SE</span><h2 id="form-heading">Adicionar nova tarefa</h2></div>
+          <span class="form-hint">* Campos obrigatórios</span>
+        </div>
+        <form id="task-form">
+          <input type="hidden" id="task-id">
+          <div class="form-grid">
+            <label class="field field-title">Título da tarefa *
+              <input id="titulo" name="titulo" type="text" maxlength="80" placeholder="Ex.: Preparar apresentação" required>
+            </label>
+            <label class="field">Responsável
+              <input id="responsavel" name="responsavel" type="text" maxlength="50" placeholder="Nome (opcional)">
+            </label>
+            <label class="field">Prioridade *
+              <select id="prioridade" name="prioridade" required>
+                <option value="media">Média</option>
+                <option value="baixa">Baixa</option>
+                <option value="alta">Alta</option>
+              </select>
+            </label>
+            <label class="field">Prazo
+              <input id="prazo" name="prazo" type="date">
+            </label>
+            <label class="field">Projeto / categoria
+              <input id="projeto" name="projeto" type="text" maxlength="40" placeholder="Ex.: Estudos">
+            </label>
+            <label class="field">Status
+              <select id="status" name="status">
+                <option value="pendente">A Fazer</option>
+                <option value="andamento">Em Andamento</option>
+                <option value="concluida">Concluídas</option>
+              </select>
+            </label>
+            <label class="field field-description">Descrição
+              <textarea id="descricao" name="descricao" rows="2" maxlength="300" placeholder="Detalhes da atividade (opcional)"></textarea>
+            </label>
+          </div>
+          <div class="form-actions">
+            <button class="text-btn hidden" type="button" id="cancel-edit">Cancelar edição</button>
+            <button class="primary-btn" type="submit" id="submit-btn">＋ Adicionar tarefa</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="board-section" id="board">
+        <div class="board-header">
+          <div><span class="section-kicker">ACOMPANHAMENTO</span><h2>Quadro de tarefas</h2></div>
+          <div class="filters">
+            <label class="search-box"><span>⌕</span><input id="search-input" type="search" placeholder="Pesquisar tarefa..." aria-label="Pesquisar pelo título"></label>
+            <select id="priority-filter" aria-label="Filtrar por prioridade">
+              <option value="">Todas as prioridades</option>
+              <option value="alta">Alta</option><option value="media">Média</option><option value="baixa">Baixa</option>
+            </select>
+            <select id="status-filter" aria-label="Filtrar por status">
+              <option value="">Todos os status</option>
+              <option value="pendente">A Fazer</option><option value="andamento">Em Andamento</option><option value="concluida">Concluídas</option>
+            </select>
+            <button class="clear-btn" id="clear-filters" type="button">Limpar</button>
+          </div>
+        </div>
+        <div class="kanban" aria-live="polite">
+          <section class="kanban-column" data-status="pendente">
+            <div class="column-heading"><div><span class="column-dot dot-pending"></span><h3>A Fazer</h3></div><span class="column-count" id="count-pendente">0</span></div>
+            <div class="task-list" id="list-pendente"></div>
+          </section>
+          <section class="kanban-column" data-status="andamento">
+            <div class="column-heading"><div><span class="column-dot dot-progress"></span><h3>Em Andamento</h3></div><span class="column-count" id="count-andamento">0</span></div>
+            <div class="task-list" id="list-andamento"></div>
+          </section>
+          <section class="kanban-column" data-status="concluida">
+            <div class="column-heading"><div><span class="column-dot dot-done"></span><h3>Concluídas</h3></div><span class="column-count" id="count-concluida">0</span></div>
+            <div class="task-list" id="list-concluida"></div>
+          </section>
+        </div>
+      </section>
+      <footer>TaskFlow <span>•</span> Organização simples, resultados melhores.</footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <dialog id="delete-dialog" class="confirm-dialog">
+    <form method="dialog">
+      <h2>Excluir tarefa?</h2><p>Essa ação não poderá ser desfeita.</p>
+      <div class="dialog-actions"><button class="text-btn" value="cancel">Cancelar</button><button class="danger-btn" id="confirm-delete" value="confirm">Excluir</button></div>
+    </form>
+  </dialog>
+</body>
+</html>
